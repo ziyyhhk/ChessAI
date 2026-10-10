@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17191f">
+  <title>ChessAI — Play your next move</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-mark">♞</span><span>Chess<span class="accent">AI</span></span></a>
+    <nav><a class="active" href="#play">Play</a><a href="#features">Features</a><a href="https://github.com/" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
+    <button class="quiet-button" id="flipBtn" title="Flip board">⇅ <span>Flip board</span></button>
+  </header>
+
+  <main class="layout" id="play">
+    <section class="game-column">
+      <div class="page-heading">
+        <div><p class="eyebrow">YOUR NEXT OPPONENT</p><h1>Play chess.<br><span class="muted-heading">Think differently.</span></h1></div>
+        <div class="live-pill"><span></span> Local demo</div>
+      </div>
+
+      <div class="board-wrap">
+        <div class="rank-labels" id="rankLabels" aria-hidden="true"></div>
+        <div class="board" id="board" role="grid" aria-label="Chess board"></div>
+        <div class="file-labels" id="fileLabels" aria-hidden="true"></div>
+      </div>
+      <div class="board-hint"><span class="hint-dot"></span><span id="hintText">Select a piece, then select its destination.</span><span class="spacer"></span><span class="kbd">Right-drag</span> draw arrow</div>
+    </section>
+
+    <aside class="side-column">
+      <section class="panel opponent-panel">
+        <div class="panel-title"><div><p class="eyebrow">OPPONENT</p><h2>Choose your AI</h2></div><span class="panel-icon">✳</span></div>
+        <label for="engineSelect">AI provider</label>
+        <select id="engineSelect">
+          <option value="random">Demo opponent (local)</option>
+          <option value="stockfish">Stockfish (coming next)</option>
+          <option value="gemini">Google Gemini (backend needed)</option>
+          <option value="custom">Custom AI endpoint (backend needed)</option>
+        </select>
+        <div class="model-row"><span class="status-dot"></span><div><strong id="engineName">Demo opponent</strong><small id="engineDescription">Plays a random legal move. No API key needed.</small></div></div>
+        <div class="settings-row">
+          <div><label for="sideSelect">Play as</label><select id="sideSelect"><option value="w">White</option><option value="b">Black</option></select></div>
+          <div><label for="paceSelect">Move delay</label><select id="paceSelect"><option value="300">Fast</option><option value="800" selected>Normal</option><option value="1400">Thoughtful</option></select></div>
+        </div>
+        <button class="primary-button" id="newGameBtn">＋ New game</button>
+        <p class="microcopy">AI model integrations require their own API access. Never put private API keys in this public website.</p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title"><div><p class="eyebrow">GAME STATUS</p><h2 id="statusTitle">Your move</h2></div><span class="turn-piece" id="turnPiece">♙</span></div>
+        <p class="status-description" id="statusDescription">White to move. Good luck.</p>
+        <div class="action-row">
+          <button class="secondary-button" id="undoBtn">↶ Undo</button>
+          <button class="secondary-button" id="premoveBtn" aria-pressed="false">⇢ Premove: Off</button>
+        </div>
+        <div class="move-header"><span>MOVE HISTORY</span><button class="text-button" id="copyPgnBtn">Copy PGN</button></div>
+        <ol class="move-list" id="moveList"><li class="empty-moves">Your moves will appear here.</li></ol>
+      </section>
+
+      <section class="panel tools-panel" id="features">
+        <div class="panel-title"><div><p class="eyebrow">BOARD TOOLS</p><h2>Analysis tools</h2></div></div>
+        <div class="tool-row"><span class="tool-symbol">↗</span><div><strong>Draw arrows</strong><small>Right-drag between squares.</small></div><button id="clearArrowsBtn" class="icon-button" title="Clear arrows">×</button></div>
+        <div class="tool-row"><span class="tool-symbol">⌫</span><div><strong>Clear annotations</strong><small>Remove all board arrows.</small></div><button id="clearMarksBtn" class="icon-button" title="Clear arrows">↺</button></div>
+        <div class="tool-row"><span class="tool-symbol">⌘</span><div><strong>Position export</strong><small>Copy the current FEN position.</small></div><button id="copyFenBtn" class="icon-button" title="Copy FEN">⧉</button></div>
+      </section>
+      <p class="footer-note">ChessAI is an independent open-source project. Not affiliated with Chess.com or Lichess.</p>
+    </aside>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
